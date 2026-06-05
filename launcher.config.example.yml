@@ -1,0 +1,34 @@
+# Dev Launcher Configuration
+# Copy this file to launcher.config.yml and fill in your paths.
+# launcher.config.yml is gitignored — your personal paths stay local.
+
+defaults:
+  # Use the full path to your IDE binary — shortcuts like "code" or "idea" may not
+  # be on PATH when launched from the GNOME dock. Find yours with: which code / which idea
+  # JetBrains Toolbox example: /home/YOU/.local/share/JetBrains/Toolbox/scripts/idea
+  # VS Code example: /usr/bin/code
+  ide: /usr/bin/code
+
+projects:
+  - name: My Frontend App
+    tla: MFA               # 2–4 letters shown on the dock icon
+    color: "#4A90D9"       # icon background colour (any CSS hex colour)
+    path: ~/code/my-frontend-app
+    docker:
+      - name: API Stack    # shown as the terminal window title
+        command: docker-compose up
+        # cwd defaults to path if omitted
+    npm:
+      - name: Dev Server
+        command: npm run dev
+      - name: Storybook
+        command: npm run storybook
+
+  - name: Backend Service
+    tla: BS
+    color: "#E94F37"
+    path: ~/code/backend-service
+    ide: idea              # overrides defaults.ide for this project
+    docker:
+      - command: docker-compose up
+    # omit npm to skip npm terminals for this project
