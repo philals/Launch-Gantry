@@ -1,5 +1,6 @@
 // src/config.js
 import { readFileSync } from 'node:fs'
+import { resolve, dirname } from 'node:path'
 import yaml from 'js-yaml'
 
 const HOME = process.env.HOME
@@ -17,13 +18,15 @@ function normalizeCommand(cmd, projectPath) {
   }
 }
 
-function normalizeProject(project, defaults) {
+function normalizeProject(project, defaults, configDir) {
   const projectPath = expandTilde(project.path)
+  const icon = project.icon ? resolve(configDir, project.icon) : null
   return {
     name: project.name,
     tla: project.tla,
     color: project.color || '#4A90D9',
     path: projectPath,
+    icon,
     ide: project.ide || defaults.ide,
     docker: (project.docker || []).map(cmd => normalizeCommand(cmd, projectPath)),
     npm: (project.npm || []).map(cmd => normalizeCommand(cmd, projectPath)),
@@ -32,9 +35,10 @@ function normalizeProject(project, defaults) {
 
 export function loadConfig(configPath) {
   const raw = yaml.load(readFileSync(configPath, 'utf8'))
+  const configDir = dirname(resolve(configPath))
   const defaults = { ide: 'vscode', terminal: 'gnome-terminal', ...raw.defaults }
   return {
     defaults,
-    projects: (raw.projects || []).map(project => normalizeProject(project, defaults)),
+    projects: (raw.projects || []).map(project => normalizeProject(project, defaults, configDir)),
   }
 }

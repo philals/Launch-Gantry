@@ -51,7 +51,7 @@ See `launcher.config.example.yml` for a full documented example.
 
 Drop PNG files into the `icons/` folder and reference them with the `icon` field in your config. Any size works — 256×256 or 512×512 recommended for crisp dock display.
 
-The `icons/` folder is committed to the repo. Your personal config (`launcher.config.yml`) and generated output (`output/`) are gitignored.
+The `icons/` folder is gitignored — your images stay on your machine. Your personal config (`launcher.config.yml`) and generated output (`output/`) are also gitignored.
 
 ## Usage
 
@@ -66,6 +66,10 @@ node generate.js --clean            # remove all generated files and symlinks
 - Ubuntu with GNOME
 - Node.js 18+
 - Ghostty terminal (for npm command windows)
+
+## Compatibility
+
+Currently tested on one machine (mine). IDE support exists for VS Code and JetBrains IDEA — other IDEs can be used by setting the full binary path in the config. PRs welcome.
 
 ## How docker and npm commands open
 

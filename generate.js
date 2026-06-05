@@ -39,8 +39,10 @@ ensureOutputDirs(OUTPUT_DIR)
 for (const project of projects) {
   console.log(`Generating: ${project.name} (${project.tla})`)
 
-  const svg = generateIcon({ tla: project.tla, color: project.color })
-  const iconPath = writeIcon(OUTPUT_DIR, project.tla, svg)
+  const iconPath = project.icon ?? (() => {
+    const svg = generateIcon({ tla: project.tla, color: project.color })
+    return writeIcon(OUTPUT_DIR, project.tla, svg)
+  })()
 
   const script = generateScript(project)
   const scriptPath = writeScript(OUTPUT_DIR, project.tla, script)
