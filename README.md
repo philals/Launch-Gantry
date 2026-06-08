@@ -64,9 +64,10 @@ The `icons/` folder is gitignored — your images stay on your machine. Your per
 ## Usage
 
 ```bash
-node generate.js                    # regenerate all projects
-node generate.js --project APP      # regenerate one project by TLA
-node generate.js --clean            # remove all generated files and symlinks
+node generate.js                             # regenerate all projects
+node generate.js --project APP               # regenerate one project by TLA
+node generate.js --clean                     # remove all generated files and symlinks
+node generate.js --clean && node generate.js # clean slate regeneration
 ```
 
 ## Requirements
