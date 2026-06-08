@@ -110,4 +110,35 @@ projects:
     assert.deepEqual(projects[0].npm, [])
     unlinkSync(p)
   })
+
+  it('launcher defaults to false when omitted', () => {
+    const p = writeTmp('cfg7.yml', `
+defaults:
+  ide: vscode
+projects:
+  - name: My App
+    tla: APP
+    color: "#ff0000"
+    path: /tmp/myapp
+`)
+    const { projects } = loadConfig(p)
+    assert.equal(projects[0].launcher, false)
+    unlinkSync(p)
+  })
+
+  it('launcher is true when set', () => {
+    const p = writeTmp('cfg8.yml', `
+defaults:
+  ide: vscode
+projects:
+  - name: My App
+    tla: APP
+    color: "#ff0000"
+    path: /tmp/myapp
+    launcher: true
+`)
+    const { projects } = loadConfig(p)
+    assert.equal(projects[0].launcher, true)
+    unlinkSync(p)
+  })
 })

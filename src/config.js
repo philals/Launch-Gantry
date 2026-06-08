@@ -27,6 +27,7 @@ function normalizeProject(project, defaults, configDir) {
     color: project.color || '#4A90D9',
     path: projectPath,
     icon,
+    launcher: project.launcher === true,
     ide: project.ide || defaults.ide,
     docker: (project.docker || []).map(cmd => normalizeCommand(cmd, projectPath)),
     npm: (project.npm || []).map(cmd => normalizeCommand(cmd, projectPath)),
