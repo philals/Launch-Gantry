@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 // generate.js
-import { resolve, dirname } from 'node:path'
+import { resolve, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { loadConfig } from './src/config.js'
 import { generateIcon } from './src/icon.js'
 import { generateScript } from './src/script.js'
-import { generateDesktop } from './src/desktop.js'
+import { generateDesktop, generateGantryDesktop } from './src/desktop.js'
 import { ensureOutputDirs, writeIcon, writeScript, writeDesktop, symlinkDesktop, clean } from './src/install.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -55,6 +55,26 @@ for (const project of projects) {
   console.log(`  ✓ Icon:    ${iconPath}`)
   console.log(`  ✓ Script:  ${scriptPath}`)
   console.log(`  ✓ Desktop: ~/.local/share/applications/${project.tla.toLowerCase()}.desktop`)
+}
+
+if (!projectFilter) {
+  const launcherProjects = config.projects.filter(p => p.launcher)
+  if (launcherProjects.length > 0) {
+    const gantryIconSvg = generateIcon({ tla: 'LG', color: '#37474F' })
+    const gantryIconPath = writeIcon(OUTPUT_DIR, 'gantry', gantryIconSvg)
+
+    const gantryEntries = launcherProjects.map(p => ({
+      name: p.name,
+      tla: p.tla,
+      scriptPath: join(OUTPUT_DIR, 'scripts', `${p.tla.toLowerCase()}.sh`),
+    }))
+
+    const gantryDesktop = generateGantryDesktop(gantryEntries, { iconPath: gantryIconPath })
+    const gantryDesktopPath = writeDesktop(OUTPUT_DIR, 'gantry', gantryDesktop)
+    symlinkDesktop(gantryDesktopPath)
+
+    console.log(`\n  ✓ Gantry:  ~/.local/share/applications/gantry.desktop (${launcherProjects.length} projects)`)
+  }
 }
 
 console.log(`\nDone! ${projects.length} project(s) generated.`)
