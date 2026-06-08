@@ -12,6 +12,7 @@ defaults:
 projects:
   - name: My Frontend App
     tla: MFA               # 2–4 letters shown on the dock icon
+    launcher: true         # optional: include in right-click launcher menu
     color: "#4A90D9"       # icon background colour (any CSS hex colour)
     path: ~/code/my-frontend-app
     docker:
@@ -26,6 +27,7 @@ projects:
 
   - name: Backend Service
     tla: BS
+    launcher: true         # optional: include in right-click launcher menu
     color: "#E94F37"
     path: ~/code/backend-service
     ide: idea              # overrides defaults.ide for this project
