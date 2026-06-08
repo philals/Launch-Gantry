@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // generate.js
 import { resolve, dirname, join } from 'node:path'
+import { existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { loadConfig } from './src/config.js'
 import { generateIcon } from './src/icon.js'
@@ -60,8 +61,13 @@ for (const project of projects) {
 if (!projectFilter) {
   const launcherProjects = config.projects.filter(p => p.launcher)
   if (launcherProjects.length > 0) {
-    const gantryIconSvg = generateIcon({ tla: 'LG', color: '#37474F' })
-    const gantryIconPath = writeIcon(OUTPUT_DIR, 'gantry', gantryIconSvg)
+    const lgPng = resolve(__dirname, 'icons', 'lg.png')
+    const gantryIconPath = existsSync(lgPng)
+      ? lgPng
+      : (() => {
+          const svg = generateIcon({ tla: 'LG', color: '#37474F' })
+          return writeIcon(OUTPUT_DIR, 'gantry', svg)
+        })()
 
     const gantryEntries = launcherProjects.map(p => ({
       name: p.name,

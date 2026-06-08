@@ -11,6 +11,7 @@ You define your projects in `launcher.config.yml`. Running `node generate.js` pr
 - An SVG icon (or uses your own custom PNG) per project
 - A bash launcher script per project
 - A `.desktop` file per project, symlinked into GNOME's application registry
+- A `gantry.desktop` launcher whose right-click dock menu lists all opted-in projects
 
 The icons appear in Activities search and can be pinned to the dock.
 
@@ -34,6 +35,7 @@ defaults:
 projects:
   - name: My App
     tla: APP           # 1–4 letters shown on the generated icon
+    launcher: true     # optional — include in the right-click launcher menu
     color: "#4A90D9"   # icon background colour
     path: ~/code/my-app
     icon: icons/my-app.png   # optional — uses generated SVG icon if omitted
@@ -46,6 +48,12 @@ projects:
 ```
 
 See `launcher.config.example.yml` for a full documented example.
+
+## Launcher menu
+
+Add `launcher: true` to any project to include it in the Launch Gantry dock icon. Pin `gantry.desktop` to your dock, then right-click it to get a menu of all opted-in projects.
+
+The launcher icon defaults to `icons/lg.png` if that file exists, otherwise a generated "LG" SVG is used.
 
 ## Custom icons
 
