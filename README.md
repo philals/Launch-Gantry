@@ -31,6 +31,7 @@ node generate.js
 ```yaml
 defaults:
   ide: /usr/bin/code   # full path to your IDE binary
+  shell: bash          # shell for command windows (bash or zsh); zsh loads your .zshrc aliases
 
 projects:
   - name: My App
@@ -85,7 +86,7 @@ Currently tested on one machine (mine). IDE support exists for VS Code and JetBr
 ## How docker and npm commands open
 
 - **Docker** (`up -d`): runs silently in the background — no terminal window
-- **npm**: opens a Ghostty terminal window with your full shell environment loaded
+- **npm**: opens a Ghostty terminal window running `defaults.shell` (or a per-project `shell`) as an interactive shell, so your aliases and nvm are loaded
 
 ## Machine setup
 

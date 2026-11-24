@@ -8,6 +8,8 @@ defaults:
   # JetBrains Toolbox example: /home/YOU/.local/share/JetBrains/Toolbox/scripts/idea
   # VS Code example: /usr/bin/code
   ide: /usr/bin/code
+  # Shell for command windows: bash (default) or zsh. Use zsh if your aliases live in ~/.zshrc.
+  shell: bash
 
 projects:
   - name: My Frontend App

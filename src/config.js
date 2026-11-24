@@ -29,6 +29,7 @@ function normalizeProject(project, defaults, configDir) {
     icon,
     launcher: project.launcher === true,
     ide: project.ide || defaults.ide,
+    shell: project.shell || defaults.shell,
     docker: (project.docker || []).map(cmd => normalizeCommand(cmd, projectPath)),
     npm: (project.npm || []).map(cmd => normalizeCommand(cmd, projectPath)),
   }
@@ -37,7 +38,7 @@ function normalizeProject(project, defaults, configDir) {
 export function loadConfig(configPath) {
   const raw = yaml.load(readFileSync(configPath, 'utf8'))
   const configDir = dirname(resolve(configPath))
-  const defaults = { ide: 'vscode', terminal: 'gnome-terminal', ...raw.defaults }
+  const defaults = { ide: 'vscode', shell: 'bash', terminal: 'gnome-terminal', ...raw.defaults }
   return {
     defaults,
     projects: (raw.projects || []).map(project => normalizeProject(project, defaults, configDir)),

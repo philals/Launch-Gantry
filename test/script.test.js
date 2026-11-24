@@ -69,6 +69,18 @@ describe('generateScript', () => {
     assert.ok(generateScript(project).includes('bash -ic'))
   })
 
+  it('runs commands in the configured shell', () => {
+    const project = {
+      ...base,
+      shell: 'zsh',
+      npm: [{ name: 'Dev', command: 'run_t', cwd: '/tmp' }],
+    }
+    const script = generateScript(project)
+    assert.ok(script.includes('ghostty -e zsh -ic'))
+    assert.ok(script.includes('exec zsh -i'))
+    assert.ok(script.includes('source ~/.bashrc'))
+  })
+
   it('keeps ghostty window open after npm command exits with exec bash -i', () => {
     const project = {
       ...base,
