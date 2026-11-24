@@ -34,3 +34,14 @@ projects:
     docker:
       - command: docker-compose up
     # omit npm to skip npm terminals for this project
+
+  - name: Backend Service CLI
+    tla: BSC
+    launcher: true
+    color: "#E94F37"
+    path: ~/code/backend-service
+    ide: none              # no IDE: just run the commands below
+    npm:
+      # one chained command so the app starts after the containers; use a shell alias if you have one
+      - name: Docker + Run
+        command: docker-compose up -d && run_backend

@@ -2,8 +2,12 @@
 const IDE_COMMANDS = { vscode: 'code', idea: 'idea' }
 
 export function generateScript(project) {
-  const ideCmd = IDE_COMMANDS[project.ide] ?? project.ide
-  const lines = ['#!/bin/bash', '[[ -f ~/.bashrc ]] && source ~/.bashrc', '', `${ideCmd} "${project.path}" &`]
+  const lines = ['#!/bin/bash', '[[ -f ~/.bashrc ]] && source ~/.bashrc', '']
+
+  if (project.ide && project.ide !== 'none') {
+    const ideCmd = IDE_COMMANDS[project.ide] ?? project.ide
+    lines.push(`${ideCmd} "${project.path}" &`)
+  }
 
   for (const task of project.docker) {
     lines.push(`ghostty -e bash -ic 'cd ${task.cwd} && ${task.command} || exec bash -i' &`)

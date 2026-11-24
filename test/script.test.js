@@ -25,6 +25,18 @@ describe('generateScript', () => {
     assert.ok(generateScript({ ...base, ide: 'idea' }).includes('idea "/home/user/code/myapp"'))
   })
 
+  it('skips the IDE when ide is "none"', () => {
+    const project = {
+      ...base,
+      ide: 'none',
+      npm: [{ name: 'Run', command: 'run_x', cwd: '/tmp' }],
+    }
+    const script = generateScript(project)
+    assert.ok(!script.includes('none'))
+    assert.ok(!script.includes('myapp" &'))
+    assert.ok(script.includes('run_x'))
+  })
+
   it('generates no ghostty lines when docker and npm are empty', () => {
     assert.ok(!generateScript(base).includes('ghostty'))
   })

@@ -49,6 +49,8 @@ projects:
 
 See `launcher.config.example.yml` for a full documented example.
 
+Set `ide: none` on a project to skip opening an IDE, e.g. to start containers and run a backend from the CLI only.
+
 ## Launcher menu
 
 Add `launcher: true` to any project to include it in the Launch Gantry dock icon. Pin `gantry.desktop` to your dock, then right-click it to get a menu of all opted-in projects.
